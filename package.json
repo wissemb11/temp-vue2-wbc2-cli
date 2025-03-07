@@ -17,7 +17,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-        "deploy": "gh-pages -d dist-app"
+        "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "pdfvuer": "^1.10.0",
