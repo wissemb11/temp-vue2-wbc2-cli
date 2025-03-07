@@ -1,9 +1,9 @@
-readme = """# WBC-UI2 Template
+# WBC-UI2 Template
 
-[![npm version](https://badge.fury.io/js/wbc-ui2.svg)](https://www.npmjs.com/package/wbc-ui2)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![`npm version`](https://badge.fury.io/js/wbc-ui2.svg)](https://www.npmjs.com/package/wbc-ui2)
+[![`License: MIT`](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-This is a simple Vue 2 CLI template showcasing the capabilities of `WBC-UI2`. It includes pre-configured settings for `vue-router`, `vuex`, and `vuetify`, injected automatically via `WBC-UI2`.
+This template demonstrates how to use `WBC-UI2`, a powerful Vue.js 2.7 component library that simplifies web development by allowing you to define HTML/CSS/JS components dynamically using JS/JSON objects. It seamlessly integrates Bootstrap and Vuetify, supports local/remote files, and includes utility methods for common tasks.
 
 ---
 
@@ -12,7 +12,7 @@ This is a simple Vue 2 CLI template showcasing the capabilities of `WBC-UI2`. It
 1. [Features](#features)
 2. [Installation](#installation)
 3. [Usage](#usage)
-4. [Project Structure](#project-structure)
+4. [Configuration](#configuration)
 5. [Examples](#examples)
 6. [Troubleshooting](#troubleshooting)
 7. [License](#license)
@@ -22,194 +22,234 @@ This is a simple Vue 2 CLI template showcasing the capabilities of `WBC-UI2`. It
 
 ## Features
 
-- **Lightweight**: Minimal setup required.
-- **Pre-Configured**: Includes `vue-router`, `vuex`, and `vuetify` out-of-the-box.
-- **Dynamic Components**: Use `WBC-UI2`'s dynamic component generation with JS/JSON objects.
-- **Responsive Design**: Built with `Vuetify` and `Bootstrap` for cross-device compatibility.
+- **Dynamic Component Generation**: Define HTML/CSS/JS components programmatically using JS/JSON objects.
+- **Framework Hybridity**: Combine Bootstrap and Vuetify components for flexible styling.
+- **File Handling**: Easily embed local files (images, PDFs, documents) or remote URLs.
+- **Multilingual Support**: Display content in multiple languages dynamically.
+- **Utility Methods**: Over 30 built-in methods for tasks like encryption, date validation, and data manipulation.
+- **External Components**: Includes external components like JsonViewer, VueOfficeExcel, and more.
+- **Vue 2.7 Compatibility**: Fully compatible with Vue 2.7 and its ecosystem.
 
 ---
 
 ## Installation
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/wissemb11/wbc-ui2-template.git
-   ```
+To install `wbc-ui2`, use npm or yarn:
 
-2. Navigate to the project directory:
-   ```bash
-   cd wbc-ui2-template
-   ```
+```
+npm install wbc-ui2
+```
 
-3. Install dependencies:
-   ```bash
-   npm install
-   # or
-   yarn install
-   ```
+Or, using Yarn:
 
-4. Start the development server:
-   ```bash
-   npm run serve
-   # or
-   yarn serve
-   ```
+```
+yarn add wbc-ui2
+```
+
+> **Note**: Ensure that you have Vue 2.7 installed in your project:
+>
+> ```
+> npm install vue@2.7.16 vue-template-compiler@2.7.16
+> ```
 
 ---
 
 ## Usage
 
-### 1. Main Entry File (`src/main.js`)
+### 1. Import the Library
 
-The main entry point initializes `Vue` and registers the `WBC-UI2` plugin:
+In your main entry file (e.g., `main.js`), import and register the `wbc-ui2` library:
 
-```javascript
-import Vue from "vue";
-import App from "./App.vue";
+```
+import Vue from 'vue';
+import App from './App.vue';
+import * as WBC_ui2_plugin from 'wbc-ui2';
 
 Vue.config.productionTip = false;
 
-// Import and use WBC-UI2 plugin
-import * as WBC_ui2_plugin from "wbc-ui2";
-Vue.use(WBC_ui2_plugin, {});
+// Use the wbc-ui2 plugin
+Vue.use(WBC_ui2_plugin);
 
 new Vue({
   render: (h) => h(App),
-}).`mount("#app");
+}).`mount('#app');
 ```
 
-### 2. Router Configuration (`src/router/index.js`)
+### 2. Use Components in Your Application
 
-The router defines routes for your application:
+Once the library is registered, you can use its components in your Vue templates:
 
-```javascript
-import Vue from "vue";
-import VueRouter from "vue-router";
-
-Vue.use(VueRouter);
-
-const routes = [
-  {
-    path: "/",
-    name: "Home",
-    component: () => import("../components/ExampleComponent.vue")
-  },
-  {
-    path: "/about",
-    name: "About",
-    component: () => import("../components/About.vue")
-  }
-];
-
-const router = new VueRouter({
-  mode: "history",
-  base: process.env.BASE_URL,
-  routes
-});
-
-export default router;
 ```
-
-### 3. Store Configuration (`src/store/index.js`)
-
-The store manages global state using `Vuex`:
-
-```javascript
-import Vue from "vue";
-import Vuex from "vuex";
-
-Vue.use(Vuex);
-
-export default new Vuex.Store({
-  state: {
-    message: "Hello from Vuex!"
-  },
-  mutations: {
-    updateMessage(state, payload) {
-      state.message = payload;
-    }
-  },
-  actions: {
-    setMessage({ commit }, message) {
-      commit("updateMessage", message);
-    }
-  },
-  getters: {
-    getMessage: (state) => state.message
+<WBC :item="{
+  comp: 'b-button',
+  options: {
+    props: { variant: 'primary' },
+    html: 'Primary Button'
   }
-});
+}"/>
 ```
 
 ---
 
-## Project Structure
+## Configuration
 
-temp_vue2_wbc2_cli/
-├── node_modules/
-├── public/
-│ ├── index.html
-├── src/
-│ ├── main.js
-│ ├── App.vue
-│ ├── router/
-│ │ └── index.js
-│ ├── store/
-│ │ └── index.js
-│ ├── components/
-│ │ ├── ExampleComponent.vue
-│ │ └── About.vue
-├── package.json
-├── README.md
-└── .gitignore
+To support advanced file types (PDFs, Office documents, Markdown, etc.), configure your project's `vue.config.js`:
 
+```
+module.exports = {
+  outputDir: "dist",
+  publicPath: process.env.NODE_ENV === "production" ? "/temp-vue2-wbc2-cli/" : "/",
+  transpileDependencies: ["wbc-ui2"],
+  chainWebpack: (config) => {
+    // Add vuetify-loader for Vuetify compatibility
+    config.plugin("vuetify-loader").use(require("vuetify-loader/lib/plugin"));
+
+    // Rule for handling .vue files
+    config.module
+      .rule("vue")
+      .test(/\.vue`/)
+      .exclude.add(/__.*\.vue`/) // Exclude files starting with "__"
+      .end()
+      .use("vue-loader")
+      .loader("vue-loader");
+
+    // Rule for raw-loading special files
+    config.module
+      .rule("raw-vue")
+      .test(/__.*\.(vue|js|ts)`/)
+      .use("raw-loader")
+      .loader("raw-loader");
+
+    // Rule for font files
+    config.module
+      .rule("fonts")
+      .test(/\.(eot|woff|woff2|ttf|svg)`/)
+      .use("file-loader")
+      .loader("file-loader")
+      .options({ name: "fonts/[name].[hash][ext]" });
+
+    // Rule for PDF files
+    config.module
+      .rule("pdf")
+      .test(/\.pdf`/)
+      .use("file-loader")
+      .loader("file-loader");
+
+    // Rule for JavaScript files
+    config.module
+      .rule("js")
+      .test(/\.js`/)
+      .exclude.add(/node_modules/)
+      .end()
+      .use("babel-loader")
+      .loader("babel-loader")
+      .options({ presets: ["@babel/preset-env"] });
+
+    // Rule for HTML, TXT, and Python files
+    config.module
+      .rule("html")
+      .test(/\.(html|txt|py)`/)
+      .use("raw-loader")
+      .loader("raw-loader");
+
+    // Rule for Office files (Word, Excel, PowerPoint)
+    config.module
+      .rule("office-files")
+      .test(/\.(doc|xls|ppt|docx|xlsx|pptx)`/)
+      .use("file-loader")
+      .loader("file-loader");
+
+    // Rule for Markdown files
+    config.module
+      .rule("markdown")
+      .test(/\.md`/)
+      .use("raw-loader")
+      .loader("raw-loader");
+  },
+};
+```
 
 ---
 
 ## Examples
 
-### Example Component (`src/components/ExampleComponent.vue`)
+### Example 1: Dynamic Bootstrap Button
 
-A sample routed component using `WBC-UI2`:
+```
+<WBC :item="{
+  comp: 'b-button',
+  options: {
+    props: { variant: 'danger' },
+    class: 'pa-1', // Mix Bootstrap and Vuetify classes
+    html: 'Dynamic Button'
+  }
+}"/>
+```
 
-```vue
-<template>
-  <WBC :item="{
-    comp: 'v-container',
-    options: {
-      class: 'pa-4',
-      children: [
-        { comp: 'h2', html: 'Example Component' },
-        { comp: 'p', html: 'This is an example of a routed component.' }
-      ]
-    }
-  }" />
-</template>
+### Example 2: Mixing Vuetify and Bootstrap Components
 
-<script>
-export default {
-  name: "ExampleComponent"
-};
-</script>
+```
+<WBC :item="{
+  comp: 'v-card',
+  options: {
+    class: 'pa-4',
+    children: [
+      { comp: 'b-card-title', html: 'Hybrid Card' },
+      { comp: 'b-card-text', html: 'Bootstrap inside Vuetify' }
+    ]
+  }
+}"/>
+```
+
+### Example 3: Embedding Local Files
+
+```
+<!-- Local Image -->
+<WBC :item="{ comp: 'img', props: { src: './public/logo.png' } }"/>
+
+<!-- Local PDF -->
+<WBC :item="{ comp: 'iframe', props: { src: './public/documents/report.pdf' }, style: { width: '100%', height: '600px' } }"/>
+```
+
+### Example 4: Embedding Remote Content
+
+```
+<!-- YouTube Embed -->
+<WBC :item="{ comp: 'iframe', props: { src: 'https://youtu.be/aMkKs4l-dI0?list=RDaMkKs4l-dI0' } }"/>
+
+<!-- Online Excel File -->
+<WBC :item="{ comp: 'VueOfficeExcel', props: { src: 'https://exinfm.com/excel%20files/cash_flow_model.xls' } }"/>
+```
+
+### Example 5: Multilingual Support
+
+```
+<WBC :item="{
+  comp: 'v-btn',
+  options: {
+    props: { color: 'primary' },
+    html: { en: 'English Button', fr: 'Bouton français', ar: 'زر عربي' }
+  }
+}"/>
 ```
 
 ---
 
 ## Troubleshooting
 
-### Common Issues
+### Common Issues and Solutions
 
 #### Issue 1: Module not found: Error: Can't resolve 'Vue'
 
-**Cause**: The library treats Vue as an external dependency. If the consuming app does not provide the correct version of Vue, this error occurs.
+**Cause**: The `wbc-ui2` library treats Vue as an external dependency (`externals: { vue: 'Vue' }` in `vue.config.js`).
 
 **Solution**:
-1. Ensure Vue 2.7 is installed:
-   ```bash
+1. Ensure the root app installs the correct version of Vue:
+   ```
    npm install vue@2.7.16 vue-template-compiler@2.7.16
    ```
-
-2. Verify peer dependencies in `package.json`:
-   ```json
+2. Verify the `peerDependencies` in the library's `package.json`:
+   ```
    "peerDependencies": {
      "vue": "^2.7.16"
    }
@@ -217,20 +257,51 @@ export default {
 
 #### Issue 2: Missing Styles or Fonts
 
-**Cause**: Vuetify's CSS or Material Design Icons may not be included.
+**Cause**: The root app may not include Vuetify's CSS or font files.
 
 **Solution**:
-Explicitly import styles in `main.js`:
-```javascript
-import 'vuetify/dist/vuetify.min.css';
-import '@mdi/font/css/materialdesignicons.css';
+- Explicitly import Vuetify's CSS and Material Design Icons in the root app's `main.js`:
+  ```
+  import 'vuetify/dist/vuetify.min.css';
+  import '@mdi/font/css/materialdesignicons.css';
+  ```
+
+---
+
+## Built-in Utility Methods
+
+`WBC-UI2` includes over 30 utility methods for common tasks:
+
+- `randomColor?.`() ====> `#F6D7AF`
+- `randomKey?.("baseKey")` ====> `baseKeyUO107`
+- `getRandomInt?.(10, 20)` ====> `14`
+- `camelToKebab?.("WbcUiComponentJS")` ====> `wbc-Ui-Component-JS`
+- `isDate?.('2025-01-01')` ====> `true`
+- `stringToJson?.(`{"a":10}`)` ====> `{ "a": 10 }`
+- `capitalizeWords?.("this an example of sentence")` ====> `This An Example Of Sentence`
+
+---
+
+## External Components
+
+The library includes external components for extended functionality:
+
+- `JsonViewer`: Render JSON data.
+- `VueOfficeExcel`: Display Excel files.
+- `VueDocPreview`: Preview documents.
+- `pdfvuer`: Display PDF files.
+
+Example:
+
+```
+<VueOfficeExcel src="https://exinfm.com/excel%20files/cash_flow_model.xls" v-if="excelFile"/>
 ```
 
 ---
 
 ## License
 
-Released under the [MIT License](LICENSE). You are free to use, modify, and distribute this template in both personal and commercial projects.
+`WBC-UI2` is released under the [MIT License](LICENSE). You are free to use, modify, and distribute this library in both personal and commercial projects.
 
 ---
 
@@ -238,13 +309,16 @@ Released under the [MIT License](LICENSE). You are free to use, modify, and dist
 
 For questions, feedback, or support, feel free to reach out:
 
-- Author: Wissem Boughamoura  
-- Email: [wissem.boughamoura@example.com](mailto:wissem.boughamoura@example.com)  
-- GitHub: [@wissemb11](https://github.com/wissemb11)  
-- Website: [https://example.com](https://example.com)  
-- Tutorial: [https://example.com/wbc-ui2-tutorial](https://example.com/wbc-ui2-tutorial)
+- Author: Wissem Boughamoura
+- Email: [wissem.boughamoura@example.com](mailto:wissem.boughamoura@example.com)
+- GitHub: [@wissemb11](https://github.com/wissemb11)
 
 ---
 
+## Acknowledgments
+
+- [Vuetify](https://vuetifyjs.com/) - For providing powerful UI components and theming.
+- [Bootstrap](https://getbootstrap.com/) - For enhancing responsiveness and design consistency.
+- [Vue.js](https://vuejs.org/) - For enabling reactive and modular front-end development.
+
 Thank you for using `WBC-UI2`!
-"""
